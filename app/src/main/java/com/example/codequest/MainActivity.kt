@@ -1,6 +1,8 @@
 package com.example.codequest
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,10 +13,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val BTlogin = findViewById<Button>(R.id.BTN_LOGIN)
+        val BTrank = findViewById<Button>(R.id.BTN_REGISTRE)
+
+        BTlogin.setOnClickListener {
+            TLmenuprincipal()
+        }
+
+        BTrank.setOnClickListener {
+            TLranki()
         }
     }
+    private fun TLmenuprincipal() {
+        val telamenu = Intent(this, Menu::class.java)
+        startActivity(telamenu)
+    }
+
+    private fun TLranki() {
+        val telaranking = Intent(this, MenuQuests::class.java)
+        startActivity(telaranking)
+    }
+
 }
