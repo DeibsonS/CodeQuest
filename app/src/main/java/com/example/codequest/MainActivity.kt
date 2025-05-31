@@ -14,10 +14,16 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+
+        // colocar o texto email e senha nos campos da tela
         val BTlogin = findViewById<Button>(R.id.BTN_LOGIN)
         val BTrank = findViewById<Button>(R.id.BTN_REGISTRE)
 
         BTlogin.setOnClickListener {
+
+            //verificar se usuario = juninho
+            //verificar se usuario = teo
+
             TLmenuprincipal()
         }
 
@@ -34,5 +40,4 @@ class MainActivity : AppCompatActivity() {
         val telaranking = Intent(this, MenuQuests::class.java)
         startActivity(telaranking)
     }
-
 }
