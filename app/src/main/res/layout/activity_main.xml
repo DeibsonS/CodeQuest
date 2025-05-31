@@ -12,6 +12,7 @@
         android:id="@+id/t1TV_TITULO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
         android:text="Ranking"
         android:textColor="#FFFFFF"
         android:textSize="48sp"
@@ -23,18 +24,19 @@
 
     <Button
         android:id="@+id/BTN_SAIR"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
+        android:fontFamily="@font/aclonica"
         android:text="Voltar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintVertical_bias="0.907" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/Ranking4"
         android:layout_width="318dp"
         android:layout_height="49dp"
         android:text="TextView"
@@ -42,7 +44,7 @@
         tools:layout_editor_absoluteY="319dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/Ranking3"
         android:layout_width="318dp"
         android:layout_height="49dp"
         android:text="TextView"
@@ -50,7 +52,7 @@
         tools:layout_editor_absoluteY="255dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/Ranking5"
         android:layout_width="318dp"
         android:layout_height="49dp"
         android:text="TextView"
@@ -58,7 +60,7 @@
         tools:layout_editor_absoluteY="380dp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/Ranking2"
         android:layout_width="318dp"
         android:layout_height="49dp"
         android:text="TextView"
@@ -74,7 +76,7 @@
         tools:layout_editor_absoluteY="137dp" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/Ranking7"
         android:layout_width="318dp"
         android:layout_height="49dp"
         android:text="TextView"
@@ -82,7 +84,7 @@
         tools:layout_editor_absoluteY="501dp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/Ranking6"
         android:layout_width="318dp"
         android:layout_height="49dp"
         android:text="TextView"

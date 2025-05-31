@@ -10,8 +10,9 @@
 
     <Button
         android:id="@+id/BTN_LOGIN"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
+        android:fontFamily="@font/aclonica"
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,6 +25,7 @@
         android:id="@+id/t1TV_TITULO2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
         android:text="CodeQuest"
         android:textColor="#FFFFFF"
         android:textSize="48sp"
@@ -35,11 +37,14 @@
         app:layout_constraintVertical_bias="0.083" />
 
     <EditText
-        android:id="@+id/ED_SENHA2"
+        android:id="@+id/ED_SENHA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:fontFamily="@font/alata"
+        android:hint="Senha"
         android:inputType="textPassword"
+        android:textAlignment="center"
         android:textColor="#FAF8F8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,11 +54,14 @@
         app:layout_constraintVertical_bias="0.581" />
 
     <EditText
-        android:id="@+id/ED_USUARIO2"
+        android:id="@+id/ED_USUARIO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:fontFamily="@font/alata"
+        android:hint="Usuário"
         android:inputType="text"
+        android:textAlignment="center"
         android:textColor="#FAF8F8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,8 +72,9 @@
 
     <Button
         android:id="@+id/BTN_REGISTRE"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
+        android:fontFamily="@font/aclonica"
         android:text="Registre"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -3,6 +3,8 @@ package com.example.codequest
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
@@ -12,18 +14,34 @@ class TelaRanking : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_tela_ranking)
 
-
-        // colocar o texto email e senha nos campos da tela
         val BTlogin = findViewById<Button>(R.id.BTN_LOGIN)
-        val BTrank = findViewById<Button>(R.id.BTN_REGISTRE)
+        val BTregistre = findViewById<Button>(R.id.BTN_REGISTRE)
+        val usuario = findViewById<EditText>(R.id.ED_USUARIO)
+        val senha = findViewById<EditText>(R.id.ED_SENHA)
+
+        // Lista de logins válidos
+        val loginsValidos = listOf(
+            Pair("Bruno", "12345"),
+            Pair("Deibson", "12345"),
+            Pair("Caetano", "12345"),
+            Pair("Gabriel", "12345"),
+            Pair("1", "1")
+        )
 
         BTlogin.setOnClickListener {
+            val usuarioDigitado = usuario.text.toString()
+            val senhaDigitada = senha.text.toString()
 
-            TLmenuprincipal()
+            val loginValido = loginsValidos.any { it.first == usuarioDigitado && it.second == senhaDigitada }
+            if (loginValido) {
+                TLmenuprincipal()
+            } else {
+                Toast.makeText(this, "Nome ou senha inválidos", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        BTrank.setOnClickListener {
-            TLranki()
+        BTregistre.setOnClickListener {
+            Toast.makeText(this, "Não é possivel fazer o registro de novos usuarios", Toast.LENGTH_SHORT).show()
         }
     }
     private fun TLmenuprincipal() {

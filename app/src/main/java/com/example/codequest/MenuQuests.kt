@@ -387,9 +387,6 @@ class MenuQuests : AppCompatActivity() {
         fun atualizarBotoes(){
             val questao = perguntasAleatorias[questaoIndex]
             TXTperg.text = questao.pergunta
-
-            //TXTperg.setTextSize(22f) // Tamanho em SP (scale-independent pixels)
-
             BTNquestA.text = questao.alternativa[0]
             BTNquestB.text = questao.alternativa[1]
             BTNquestC.text = questao.alternativa[2]

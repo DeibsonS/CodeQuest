@@ -12,10 +12,15 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        val BTNsair = findViewById<Button>(R.id.BTN_SAIR)
+
+        BTNsair.setOnClickListener {
+            TLmenuprincipal()
+        }
     }
 
-    private fun TL_QUESTOES() {
-        val telamenu = Intent(this, MenuQuests::class.java)
+    private fun TLmenuprincipal() {
+        val telamenu = Intent(this, Menu::class.java)
         startActivity(telamenu)
     }
 }
