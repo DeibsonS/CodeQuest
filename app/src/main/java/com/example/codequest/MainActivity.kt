@@ -12,9 +12,6 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-
-
-
     }
 
     private fun TL_QUESTOES() {
