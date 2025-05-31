@@ -38,12 +38,12 @@ class Menu : AppCompatActivity() {
 
     private fun TL_RANKING() {
         //ALTERAR A TELA PARA TELA DE RANKING
-        val telaranking = Intent(this, MenuQuests::class.java)
+        val telaranking = Intent(this, MainActivity::class.java)
         startActivity(telaranking)
     }
 
     private fun TL_VOLTA() {
-        val telalogin = Intent(this, MainActivity::class.java)
+        val telalogin = Intent(this, TelaRanking::class.java)
         startActivity(telalogin)
     }
 
