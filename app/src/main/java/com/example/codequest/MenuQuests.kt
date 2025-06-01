@@ -459,7 +459,7 @@ class MenuQuests : AppCompatActivity() {
                 desativarTodosBotoes()
                 //Ativa botao de proxima
                 BTNproxi.isEnabled = true
-                //ir direto para a prox quest
+                //ir direto para a prox quest quando for certa a resposta
 
             } else {
                 Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
