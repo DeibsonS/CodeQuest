@@ -13,7 +13,7 @@
         android:layout_width="146dp"
         android:layout_height="55dp"
         android:fontFamily="@font/aclonica"
-        android:text="Raking"
+        android:text="Ranking"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"

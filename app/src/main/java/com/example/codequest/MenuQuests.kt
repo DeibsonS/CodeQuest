@@ -399,10 +399,6 @@ class MenuQuests : AppCompatActivity() {
             }
         }
 
-        //aumenta o tamanho do textview de acordo com a pergunta
-        //val tamanho = if (Questao.pergunta.length > 80) 18f else 22f
-        //TXTperg.setTextSize(tamanho)
-
         fun verificarResposta(indiceSelecionado: Int) {
             val questaoAtual = perguntasAleatorias[questaoIndex]
             if (indiceSelecionado == questaoAtual.correta) {
@@ -433,90 +429,73 @@ class MenuQuests : AppCompatActivity() {
         }
 
         atualizarBotoes()
+        BTNproxi.isEnabled = false
 
         BTNvoltar.setOnClickListener {
             val TelaMenu = Intent(this, Menu::class.java)
             startActivity(TelaMenu)
         }
 
-        BTNquestA.setOnClickListener {
-            if (respostaSelecionada == 0) {
-                respostaSelecionada = null
-                atualizarEstadoBotoes(null)
-            } else {
-                respostaSelecionada = 0
-                atualizarEstadoBotoes(0)
-            }
-        }
-        BTNquestB.setOnClickListener {
-            if (respostaSelecionada == 1) {
-                respostaSelecionada = null
-                atualizarEstadoBotoes(null)
-            } else {
-                respostaSelecionada = 1
-                atualizarEstadoBotoes(1)
-            }
-        }
-        BTNquestC.setOnClickListener {
-            if (respostaSelecionada == 2) {
-                respostaSelecionada = null
-                atualizarEstadoBotoes(null)
-            } else {
-                respostaSelecionada = 2
-                atualizarEstadoBotoes(2)
-            }
-        }
-        BTNquestD.setOnClickListener {
-            if (respostaSelecionada == 3) {
-                respostaSelecionada = null
-                atualizarEstadoBotoes(null)
-            } else {
-                respostaSelecionada = 3
-                atualizarEstadoBotoes(3)
+        fun desativarTodosBotoes() {
+            for (botao in botoes) {
+                botao.isEnabled = false
             }
         }
 
-        BTNproxi.setOnClickListener {
-            if (respostaSelecionada == null) {
-                Toast.makeText(this, "Escolha uma alternativa!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+        fun desativarBotao(indice: Int) {
+            botoes[indice].isEnabled = false
+        }
 
-            val correta = respostaSelecionada == perguntasAleatorias[questaoIndex].correta
+        fun ativaBotao(indice: Int) {
+            botoes[indice].isEnabled = true
+        }
 
-            if (correta) {
+        fun verificarRespostaImediata(indiceSelecionado: Int) {
+            val questaoAtual = perguntasAleatorias[questaoIndex]
+            if (indiceSelecionado == questaoAtual.correta) {
+                Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
                 pontuacao++
                 salvarPontuacao(usuario, pontuacao)
-                Toast.makeText(this, "Resposta correta!", Toast.LENGTH_SHORT).show()
+                desativarTodosBotoes()
+                //Ativa botao de proxima
+                BTNproxi.isEnabled = true
+                //ir direto para a prox quest
 
-                if (questaoIndex == perguntasAleatorias.size - 1) {
-                    AlertDialog.Builder(this)
-                        .setTitle("Fim do Quiz")
-                        .setMessage("$usuario acertou $pontuacao de ${resp.size} perguntas.")
-                        .setCancelable(false)
-                        .setPositiveButton("Ranking") { _, _ -> //ALTERAR PARA TELA DO LOGIN
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish() // finaliza tela e vai pro ranking
-                        }
-                        .setNegativeButton("Início") { _, _ ->
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish() // finaliza tela e vai pro inicio
-                        }
-                        .show()
-                } else {
-                    questaoIndex++
-                    atualizarBotoes()
-                    respostaSelecionada = null
-                    atualizarEstadoBotoes(null)
-                }
             } else {
-                // deixar os botoes vermelho quando for errado
+                Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                desativarBotao(indiceSelecionado)
+            }
+        }
 
-                Toast.makeText(this, "Resposta incorreta! Tente novamente.", Toast.LENGTH_SHORT)
+        BTNquestA.setOnClickListener { verificarRespostaImediata(0) }
+        BTNquestB.setOnClickListener { verificarRespostaImediata(1) }
+        BTNquestC.setOnClickListener { verificarRespostaImediata(2) }
+        BTNquestD.setOnClickListener { verificarRespostaImediata(3) }
+
+        BTNproxi.setOnClickListener {
+            questaoIndex++
+            if (questaoIndex < perguntasAleatorias.size) {
+                atualizarBotoes()
+                for (botao in botoes) {
+                    botao.isEnabled = true
+                }
+                BTNproxi.isEnabled = false
+            } else {
+                AlertDialog.Builder(this)
+                    .setTitle("Fim do Quiz")
+                    .setMessage("$usuario acertou $pontuacao de ${resp.size} perguntas.")
+                    .setCancelable(false)
+                    .setPositiveButton("Ranking") { _, _ ->
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    }
+                    .setNegativeButton("Início") { _, _ ->
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    }
                     .show()
             }
         }
+
     }
 }
