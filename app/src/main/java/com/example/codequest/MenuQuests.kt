@@ -188,7 +188,7 @@ class MenuQuests : AppCompatActivity() {
                 )
             ),
             Questao(
-                "Qual dessas linguagens usa chaves `{}` para definir blocos de código?",
+                "Qual dessas linguagens usa chaves {} para definir blocos de código?",
                 2,
                 listOf(
                     "A - Python",
@@ -457,6 +457,7 @@ class MenuQuests : AppCompatActivity() {
                 pontuacao++
                 salvarPontuacao(usuario, pontuacao)
                 desativarTodosBotoes()
+                ativaBotao(indiceSelecionado)
                 //Ativa botao de proxima
                 BTNproxi.isEnabled = true
                 //ir direto para a prox quest quando for certa a resposta
