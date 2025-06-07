@@ -34,7 +34,7 @@ class TelaRanking : AppCompatActivity() {
 
             val loginValido = loginsValidos.any { it.first == usuarioDigitado && it.second == senhaDigitada }
             if (loginValido) {
-                TLmenuprincipal()
+                TLmenuprincipal(usuarioDigitado)
             } else {
                 Toast.makeText(this, "Nome ou senha inválidos", Toast.LENGTH_SHORT).show()
             }
@@ -44,9 +44,10 @@ class TelaRanking : AppCompatActivity() {
             Toast.makeText(this, "Não é possivel fazer o registro de novos usuarios", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun TLmenuprincipal() {
-        val telamenu = Intent(this, Menu::class.java)
-        startActivity(telamenu)
+    private fun TLmenuprincipal(usuario: String) {
+        val intent = Intent(this, Menu::class.java)
+        intent.putExtra("usuario", usuario)
+        startActivity(intent)
     }
 
     private fun TLranki() {

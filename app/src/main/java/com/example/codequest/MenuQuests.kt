@@ -14,14 +14,14 @@ import androidx.core.view.WindowInsetsCompat
 class MenuQuests : AppCompatActivity() {
 
     fun salvarPontuacao(usuario: String, pontos: Int) {
-        val nomeArquivo = "pontuacao.txt"
+        val nomeArquivo = "pontuacao_$usuario.txt"
         openFileOutput(nomeArquivo, MODE_PRIVATE).use {
             it.write(pontos.toString().toByteArray())
         }
     }
 
     fun lerPontuacao(usuario: String): Int {
-        val nomeArquivo = "pontuacao.txt"
+        val nomeArquivo = "pontuacao_$usuario.txt"
         return try {
             val texto = openFileInput(nomeArquivo).bufferedReader().useLines { it.firstOrNull() }
             texto?.toInt() ?: 0
@@ -44,8 +44,7 @@ class MenuQuests : AppCompatActivity() {
         val TXTperg = findViewById<TextView>(R.id.TXT_QUEST)
 
         //para receber o nome do usuario de acordo com o login
-        //val usuario = intent.getStringExtra("usuario") ?: "desconhecido"
-        val usuario = "Jose"
+        val usuario = intent.getStringExtra("usuario") ?: "desconhecido"
 
         var pontuacao: Int  // para guardar a pontuacao
         pontuacao = lerPontuacao(usuario) // carrega pontuação salva
@@ -381,7 +380,7 @@ class MenuQuests : AppCompatActivity() {
 
         val perguntasAleatorias = resp.shuffled().toMutableList()
         var questaoIndex = 0
-        var respostaSelecionada: Int? = null
+        //var respostaSelecionada: Int? = null
         val botoes = listOf(BTNquestA, BTNquestB, BTNquestC, BTNquestD)
 
         fun atualizarBotoes(){
