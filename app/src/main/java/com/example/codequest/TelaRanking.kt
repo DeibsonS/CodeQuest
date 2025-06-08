@@ -25,6 +25,11 @@ class TelaRanking : AppCompatActivity() {
             Pair("Deibson", "12345"),
             Pair("Caetano", "12345"),
             Pair("Gabriel", "12345"),
+            Pair("Acconcia", "111"),
+            Pair("Barbie", "111"),
+            Pair("Leo", "111"),
+            Pair("Polly Pocket", "111"),
+            Pair("Chadoni", "111"),
             Pair("1", "1")
         )
 

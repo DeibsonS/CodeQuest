@@ -2,12 +2,14 @@ package com.example.codequest
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 
 class MenuQuests : AppCompatActivity() {
 
@@ -40,10 +42,11 @@ class MenuQuests : AppCompatActivity() {
         val BTNquestD = findViewById<Button>(R.id.BTNquestD)
         val BTNproxi = findViewById<Button>(R.id.BTNproxi)
         val TXTperg = findViewById<TextView>(R.id.TXT_QUEST)
-
         val usuario = intent.getStringExtra("usuario") ?: "Visitante"
-
         var pontuacao = lerPontuacao(usuario)
+        var snackbarAtual: Snackbar? = null
+        var errosNaQuestaoAtual = 0
+        var errosTotal = 0
 
         data class Questao(
             val pergunta: String,
@@ -399,18 +402,66 @@ class MenuQuests : AppCompatActivity() {
             botoes[indice].isEnabled = true
         }
 
+        fun mostrarRespostaCorreta(indiceSelecionado: Int) {
+            val view = findViewById<View>(android.R.id.content)
+            val questaoAtual = perguntasAleatorias[questaoIndex]
+            val mensagem = if (indiceSelecionado == questaoAtual.correta) "Resposta Correta!" else "Resposta Errada!"
+
+            snackbarAtual?.dismiss() // Encerra o Snackbar anterior, se existir
+
+            snackbarAtual = Snackbar.make(view, mensagem, Snackbar.LENGTH_INDEFINITE)
+                .setAnchorView(R.id.BTNproxi)
+            snackbarAtual?.show()
+        }
+
         fun verificarRespostaImediata(indiceSelecionado: Int) {
             val questaoAtual = perguntasAleatorias[questaoIndex]
             if (indiceSelecionado == questaoAtual.correta) {
-                Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
+                mostrarRespostaCorreta(indiceSelecionado)
                 pontuacao++
                 salvarPontuacao(usuario, pontuacao)
                 desativarTodosBotoes()
                 ativaBotao(indiceSelecionado)
                 BTNproxi.isEnabled = true
+                errosNaQuestaoAtual = 0 // zera os erros
             } else {
-                Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
+                mostrarRespostaCorreta(indiceSelecionado)
                 desativarBotao(indiceSelecionado)
+                errosNaQuestaoAtual++
+                if (errosNaQuestaoAtual >= 2) {
+                    desativarTodosBotoes()
+                    intent.putExtra("usuario", usuario)
+                    errosTotal++
+
+                    // 👉 Verifica se perdeu o jogo
+                    if (errosTotal >= 3) {
+                        intent.putExtra("usuario", usuario)
+                        AlertDialog.Builder(this@MenuQuests)
+                            .setTitle("Você perdeu!")
+                            .setMessage("Cadê o GPT?")
+                            .setCancelable(false)
+                            .setPositiveButton("Voltar ao menu") { _, _ ->
+                                val intent = Intent(this@MenuQuests, Menu::class.java)
+                                intent.putExtra("usuario", usuario)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .show()
+                        return // para não continuar com o restante da função
+                    }
+
+                    val alternativaCorreta = questaoAtual.alternativa[questaoAtual.correta]
+
+                    AlertDialog.Builder(this@MenuQuests)
+                        .setTitle("Você errou a questão")
+                        .setMessage("A alternativa correta é:\n\n$alternativaCorreta")
+                        .setCancelable(false)
+                        .setPositiveButton("OK") { _, _ ->
+                            BTNproxi.performClick()
+                        }
+                        .show()
+
+                }
             }
         }
 
@@ -420,6 +471,8 @@ class MenuQuests : AppCompatActivity() {
         BTNquestD.setOnClickListener { verificarRespostaImediata(3) }
 
         BTNproxi.setOnClickListener {
+            snackbarAtual?.dismiss()
+            errosNaQuestaoAtual = 0 // zera ao ir pra próxima
             questaoIndex++
             if (questaoIndex < perguntasAleatorias.size) {
                 atualizarBotoes()
