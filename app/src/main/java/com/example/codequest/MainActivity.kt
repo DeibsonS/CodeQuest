@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnSair = findViewById<Button>(R.id.BTN_SAIR)
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_ranking)
+        val usuario = intent.getStringExtra("usuario") ?: "Visitante"
 
         val rankingList = carregarRanking()
         if (rankingList.isEmpty()) {
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         btnSair.setOnClickListener {
             val intent = Intent(this, Menu::class.java)
+            intent.putExtra("usuario", usuario)  // passa o usuário junto
             startActivity(intent)
             finish()
         }
