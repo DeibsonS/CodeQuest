@@ -40,10 +40,8 @@ class MenuQuests : AppCompatActivity() {
         val BTNquestD = findViewById<Button>(R.id.BTNquestD)
         val BTNproxi = findViewById<Button>(R.id.BTNproxi)
         val TXTperg = findViewById<TextView>(R.id.TXT_QUEST)
-        val txtNomeUsuario = findViewById<TextView>(R.id.txtNomeUsuario)
 
         val usuario = intent.getStringExtra("usuario") ?: "Visitante"
-        txtNomeUsuario.text = "Jogador: $usuario"
 
         var pontuacao = lerPontuacao(usuario)
 
