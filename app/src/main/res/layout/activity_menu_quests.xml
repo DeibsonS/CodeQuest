@@ -115,4 +115,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.088" />
 
+    <TextView
+        android:id="@+id/txtNomeUsuario"
+        android:layout_width="342dp"
+        android:layout_height="25dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="199dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

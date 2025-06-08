@@ -5,14 +5,17 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class Menu : AppCompatActivity() {
+    private var usuario: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_menu3)
+
+        // Recupera o nome do usuário vindo da tela de login
+        usuario = intent.getStringExtra("usuario")
 
         val BTN_QUESTOES = findViewById<Button>(R.id.BTN_QUESTOES)
         val BTN_RANKING = findViewById<Button>(R.id.BTN_RANKING)
@@ -29,22 +32,22 @@ class Menu : AppCompatActivity() {
         BTN_VOLTAR.setOnClickListener {
             TL_VOLTA()
         }
-
     }
+
     private fun TL_QUESTOES() {
-        val telamenu = Intent(this, MenuQuests::class.java)
-        startActivity(telamenu)
+        val intent = Intent(this, MenuQuests::class.java)
+        intent.putExtra("usuario", usuario)
+        startActivity(intent)
     }
 
     private fun TL_RANKING() {
-        //ALTERAR A TELA PARA TELA DE RANKING
-        val telaranking = Intent(this, MainActivity::class.java)
-        startActivity(telaranking)
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("usuario", usuario)
+        startActivity(intent)
     }
 
     private fun TL_VOLTA() {
-        val telalogin = Intent(this, TelaRanking::class.java)
-        startActivity(telalogin)
+        val intent = Intent(this, TelaRanking::class.java)
+        startActivity(intent)
     }
-
-    }
+}

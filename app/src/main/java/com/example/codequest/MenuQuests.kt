@@ -8,8 +8,6 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MenuQuests : AppCompatActivity() {
 
@@ -42,16 +40,16 @@ class MenuQuests : AppCompatActivity() {
         val BTNquestD = findViewById<Button>(R.id.BTNquestD)
         val BTNproxi = findViewById<Button>(R.id.BTNproxi)
         val TXTperg = findViewById<TextView>(R.id.TXT_QUEST)
+        val txtNomeUsuario = findViewById<TextView>(R.id.txtNomeUsuario)
 
-        //para receber o nome do usuario de acordo com o login
-        val usuario = intent.getStringExtra("usuario") ?: "desconhecido"
+        val usuario = intent.getStringExtra("usuario") ?: "Visitante"
+        txtNomeUsuario.text = "Jogador: $usuario"
 
-        var pontuacao: Int  // para guardar a pontuacao
-        pontuacao = lerPontuacao(usuario) // carrega pontuação salva
+        var pontuacao = lerPontuacao(usuario)
 
         data class Questao(
             val pergunta: String,
-            val correta: Int, // índice da alternativa correta
+            val correta: Int,
             val alternativa: List<String>
         )
 
@@ -380,10 +378,9 @@ class MenuQuests : AppCompatActivity() {
 
         val perguntasAleatorias = resp.shuffled().toMutableList()
         var questaoIndex = 0
-        //var respostaSelecionada: Int? = null
         val botoes = listOf(BTNquestA, BTNquestB, BTNquestC, BTNquestD)
 
-        fun atualizarBotoes(){
+        fun atualizarBotoes() {
             val questao = perguntasAleatorias[questaoIndex]
             TXTperg.text = questao.pergunta
             BTNquestA.text = questao.alternativa[0]
@@ -392,53 +389,8 @@ class MenuQuests : AppCompatActivity() {
             BTNquestD.text = questao.alternativa[3]
         }
 
-        fun atualizarEstadoBotoes(indiceSelecionado: Int?) {
-            for (i in botoes.indices) {
-                botoes[i].isEnabled = (indiceSelecionado == null || i == indiceSelecionado)
-            }
-        }
-
-        fun verificarResposta(indiceSelecionado: Int) {
-            val questaoAtual = perguntasAleatorias[questaoIndex]
-            if (indiceSelecionado == questaoAtual.correta) {
-                Toast.makeText(this, "Resposta Correta!", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        fun mostrarResultado(correta: Boolean) {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Resultado")
-
-            if (correta) {
-                pontuacao++ // aumenta a pontuacao
-                salvarPontuacao(usuario, pontuacao)
-                builder.setMessage("Resposta Correta!")
-            } else {
-                builder.setMessage("Resposta Errada!")
-            }
-
-            builder.setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss() // Fecha o pop-up
-            }
-
-            val dialog = builder.create()
-            dialog.show()
-        }
-
-        atualizarBotoes()
-        BTNproxi.isEnabled = false
-
-        BTNvoltar.setOnClickListener {
-            val TelaMenu = Intent(this, Menu::class.java)
-            startActivity(TelaMenu)
-        }
-
         fun desativarTodosBotoes() {
-            for (botao in botoes) {
-                botao.isEnabled = false
-            }
+            for (botao in botoes) botao.isEnabled = false
         }
 
         fun desativarBotao(indice: Int) {
@@ -457,9 +409,7 @@ class MenuQuests : AppCompatActivity() {
                 salvarPontuacao(usuario, pontuacao)
                 desativarTodosBotoes()
                 ativaBotao(indiceSelecionado)
-                //Ativa botao de proxima
                 BTNproxi.isEnabled = true
-
             } else {
                 Toast.makeText(this, "Resposta Errada!", Toast.LENGTH_SHORT).show()
                 desativarBotao(indiceSelecionado)
@@ -475,9 +425,7 @@ class MenuQuests : AppCompatActivity() {
             questaoIndex++
             if (questaoIndex < perguntasAleatorias.size) {
                 atualizarBotoes()
-                for (botao in botoes) {
-                    botao.isEnabled = true
-                }
+                for (botao in botoes) botao.isEnabled = true
                 BTNproxi.isEnabled = false
             } else {
                 AlertDialog.Builder(this)
@@ -485,16 +433,28 @@ class MenuQuests : AppCompatActivity() {
                     .setMessage("$usuario acertou $pontuacao de ${resp.size} perguntas.")
                     .setCancelable(false)
                     .setPositiveButton("Ranking") { _, _ ->
-                        startActivity(Intent(this, MainActivity::class.java))
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("usuario", usuario)
+                        startActivity(intent)
                         finish()
                     }
                     .setNegativeButton("Início") { _, _ ->
-                        startActivity(Intent(this, MainActivity::class.java))
+                        val intent = Intent(this, Menu::class.java)
+                        intent.putExtra("usuario", usuario)
+                        startActivity(intent)
                         finish()
                     }
                     .show()
             }
         }
 
+        BTNvoltar.setOnClickListener {
+            val intent = Intent(this, Menu::class.java)
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)
+        }
+
+        atualizarBotoes()
+        BTNproxi.isEnabled = false
     }
 }

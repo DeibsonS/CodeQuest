@@ -1,38 +1,38 @@
 package com.example.codequest
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val BTNsair = findViewById<Button>(R.id.BTN_SAIR)
-        val TVranking = findViewById<TextView>(R.id.RKnome)
+        val btnSair = findViewById<Button>(R.id.BTN_SAIR)
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_ranking)
 
-        // Atualiza o ranking
-        val ranking = carregarRanking()
-        TVranking.text = ranking
+        val rankingList = carregarRanking()
+        if (rankingList.isEmpty()) {
+            Toast.makeText(this, "Nenhum ranking disponível ainda.", Toast.LENGTH_SHORT).show()
+        }
 
-        BTNsair.setOnClickListener {
-            TLmenuprincipal()
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = RankingAdapter(rankingList)
+
+        btnSair.setOnClickListener {
+            val intent = Intent(this, Menu::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
-    private fun TLmenuprincipal() {
-        val telamenu = Intent(this, Menu::class.java)
-        startActivity(telamenu)
-    }
-
-    private fun carregarRanking(): String {
+    private fun carregarRanking(): List<Pair<String, Int>> {
         val rankingList = mutableListOf<Pair<String, Int>>()
 
         filesDir.listFiles()?.forEach { file ->
@@ -47,12 +47,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val top7 = rankingList.sortedByDescending { it.second }.take(7)
-
-        if (top7.isEmpty()) return "Nenhum ranking disponível ainda."
-
-        return top7.mapIndexed { index, (nome, pontos) ->
-            "${index + 1}º - $nome: $pontos pontos"
-        }.joinToString("\n")
+        return rankingList.sortedByDescending { it.second }.take(7)
     }
 }
